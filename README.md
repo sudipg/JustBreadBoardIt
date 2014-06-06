@@ -1,4 +1,4 @@
 JustBreadBoardIt
 ================
 
-An EE prototyping assistant for Bread Board Noobs
+An EE prototyping assistant for the Bread Board.
