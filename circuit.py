@@ -13,10 +13,13 @@ class Circuit(object):
 		"""Only method to be used to insert a connection into the Circuit"""	
 		new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
 		self.connections.append(new_connection)
+		component1.insert_connection(target)
 
 	def insert_components(self, component_name, number_of_pins, x_length, y_length):
-		"""Only method to be used to insert a component into the Circuit"""
-		self.components.append(component_name, number_of_pins, x_length, y_length)
+		"""Only method to be used to insert a component into the Circuit. Also returns the new component object"""
+		c = Component(component_name, number_of_pins, x_length, y_length)
+		self.components.append(c)
+		return c
 
 	def remove_connection(self, component1, component2):
 		"""Removes the given connection and its references from the relevant components"""
@@ -33,12 +36,12 @@ class Component(object):
 
 	def insert_connection(self, target, source_pin_number):
 		pin_number = len(self.pins) - 1
-		self.pins[pin_number] = target
+		self.pins[pin_number] = [target]
 
 
 
 class Connection(object):
-	"""representationo of a standard electrical connection that joins two elements"""
+	"""representationo of a standard electrical connection that joins two elements: mostly just a data holder"""
 	def __init__(self, component1, component1_pin_number, component2, component2_pin_number):
 		super(Connection, self).__init__()
 		self.component1 = component1
