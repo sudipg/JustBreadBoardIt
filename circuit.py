@@ -11,12 +11,16 @@ class Circuit(object):
 
 	def insert_connection(self, component1, component1_pin_number, component2, component2_pin_number):
 		"""Only method to be used to insert a connection into the Circuit"""	
-		new_connection = Connection(component1, component2)
+		new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
 		self.connections.append(new_connection)
 
 	def insert_components(self, component_name, number_of_pins, x_length, y_length):
 		"""Only method to be used to insert a component into the Circuit"""
 		self.components.append(component_name, number_of_pins, x_length, y_length)
+
+	def remove_connection(self, component1, component2):
+		"""Removes the given connection and its references from the relevant components"""
+		pass
 
 
 class Component(object):
@@ -27,8 +31,10 @@ class Component(object):
 		self.number_of_pins = number_of_pins
 		self.pins = {}
 
-	def insert_connection(target, target_pin_number, source_pin_number):
-		
+	def insert_connection(self, target, source_pin_number):
+		pin_number = len(self.pins) - 1
+		self.pins[pin_number] = target
+
 
 
 class Connection(object):
