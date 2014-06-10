@@ -14,6 +14,7 @@ class Circuit(object):
 		new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
 		self.connections.append(new_connection)
 		component1.insert_connection(target)
+		return new_connection
 
 	def insert_components(self, component_name, number_of_pins, x_length, y_length):
 		"""Only method to be used to insert a component into the Circuit. Also returns the new component object"""
@@ -35,8 +36,10 @@ class Component(object):
 		self.pins = {}
 
 	def insert_connection(self, target, source_pin_number):
-		pin_number = len(self.pins) - 1
-		self.pins[pin_number] = [target]
+		if source_pin_number in self.pins.keys:
+			self.pins[source_pin_number].append(target)
+		else:
+			self.pins[source_pin_number] = [target]
 
 
 
