@@ -1,6 +1,9 @@
 """
 This file contains most of the structures used to construct a circuit schematic
 """
+
+# Sid: I did some quick changes and wrote a few comments. Sorry if it is a little hurried, but I had to go :/
+
 class Circuit(object):
 	"""A Circuit representation"""
 
@@ -13,14 +16,14 @@ class Circuit(object):
 		"""Only method to be used to insert a connection into the Circuit"""	
 		new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
 		self.connections.append(new_connection)
-		component1.insert_connection(target)
+		component1.insert_connection(new_connection, component1_pin_number)
+		#I modified the above line a bit because it did not call the func with the right amount of args.
+
 		return new_connection
 
-	def insert_components(self, component_name, number_of_pins, x_length, y_length):
+	def insert_component(self, component):
 		"""Only method to be used to insert a component into the Circuit. Also returns the new component object"""
-		c = Component(component_name, number_of_pins, x_length, y_length)
-		self.components.append(c)
-		return c
+		self.components.append(component)
 
 	def remove_connection(self, component1, component2):
 		"""Removes the given connection and its references from the relevant components"""
@@ -29,22 +32,27 @@ class Circuit(object):
 
 class Component(object):
 	"""docstring for Component"""
-	def __init__(self, component_name, number_of_pins, x_length, y_length):
+	def __init__(self, component_name, number_of_pins, x_length, y_length, circuit):
+		#We need a way of differentiating between two similar components. (What if we have 2 resistors.) An ID number will be fine.
 		super(Component, self).__init__()
+		# self.ID = rand_num or we could have a class field called id_gen that increments everytime a new object is created.
 		self.x_length, self.y_length = x_length, y_length
 		self.number_of_pins = number_of_pins
 		self.pins = {}
+		self.circuit = circuit
 
 	def insert_connection(self, target, source_pin_number):
+		# I am guessing you know how you want to use this function. 
 		if source_pin_number in self.pins.keys:
 			self.pins[source_pin_number].append(target)
 		else:
 			self.pins[source_pin_number] = [target]
+			# Nothing modified in the above line, but what is [target]?
 
 
 
 class Connection(object):
-	"""representationo of a standard electrical connection that joins two elements: mostly just a data holder"""
+	"""representationo of a standard electrical connection that joins two elements: mostly just a data holder. This is a component class, it's not to be used outside. Maybe we shoud make the class _Connection. Sorry for the long dostring; I don't remember how to do a multiline docstring."""
 	def __init__(self, component1, component1_pin_number, component2, component2_pin_number):
 		super(Connection, self).__init__()
 		self.component1 = component1
