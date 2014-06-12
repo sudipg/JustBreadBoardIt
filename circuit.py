@@ -3,6 +3,7 @@ This file contains most of the structures used to construct a circuit schematic
 """
 
 # Sid: I did some quick changes and wrote a few comments. Sorry if it is a little hurried, but I had to go :/
+# And the dogs are going to kill me in my sleep.
 
 class Circuit(object):
 	"""A Circuit representation"""
