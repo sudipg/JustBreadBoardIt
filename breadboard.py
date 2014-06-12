@@ -12,6 +12,7 @@ class Breadboard(object):
 		self.right_blue = {}
 		self.left_red = {}
 		self.left_blue = {}
+		self.components = {}
 
 		# the standard center pins
 		for x in range(1,11):
@@ -26,9 +27,10 @@ class Breadboard(object):
 			left_blue[y] = Hole(0, y)
 			left_red[y] = Hole(0, y)
 
-	def insert_pin(x, y, ):
-		pass
-
+	def insert_pin(x, y, component, pin_number):
+		self.holes[str(x).append('_'.append(str(y)))].insert_pin(pin_number, component)
+		if not component in self.components.values():
+			self.components[len(self.components)+1] = component
 
 class Hole(object):
 	"""docstring for Hole"""
