@@ -61,3 +61,31 @@ class Connection(object):
 	def end2(self):
 		"""returns the second connected component as a Component object"""
 		return self.component2
+
+
+class Resistor(Component):
+	"""docstring for Resistor"""
+	def __init__(self, component_name):
+		super(Resistor, self).__init__(component_name, 2, 2, 1)
+
+class Capacitor(Component):
+	"""docstring for Capacitor"""
+	def __init__(self, component_name):
+		super(Capacitor, self).__init__(component_name, 2,2,1)		
+###############################################################################
+# Under construction!
+# Adding new default types to make life easier
+###############################################################################
+class Battery_positive(Component):
+	"""docstring for Battery_positive"""
+	def __init__(self, arg):
+		super(Battery_positive, self).__init__()
+		self.arg = arg
+	
+class LED(Component):
+	"""docstring for LED"""
+	def __init__(self, arg):
+		super(LED, self).__init__()
+		self.arg = arg
+		
+		

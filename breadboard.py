@@ -6,8 +6,29 @@ class Breadboard(object):
 	"""docstring for Breadboard"""
 	def __init__(self):
 		super(Breadboard, self).__init__()
-		self.number_of_rows = 20
-		
+		self.number_of_rows = 50
+		self.holes = {}
+		self.right_red = {}
+		self.right_blue = {}
+		self.left_red = {}
+		self.left_blue = {}
+
+		# the standard center pins
+		for x in range(1,11):
+			for y in range(1, self.number_of_rows+1):
+				self.holes[str(x).append('_'.append(str(y)))] = Hole(x, y)
+
+
+		# the power lines
+		for y in range(1, number_of_rows+1):
+			right_blue[y] = Hole(0, y)
+			right_red[y] = Hole(0, y)
+			left_blue[y] = Hole(0, y)
+			left_red[y] = Hole(0, y)
+
+	def insert_pin(x, y, ):
+		pass
+
 
 class Hole(object):
 	"""docstring for Hole"""
