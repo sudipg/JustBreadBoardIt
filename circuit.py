@@ -6,7 +6,7 @@ This file contains most of the structures used to construct a circuit schematic
 # And the dogs are going to kill me in my sleep.
 
 class Circuit(object):
-	"""A Circuit representation"""
+	"""A Circuit repr4esentation"""
 
 	def __init__(self):
 		super(Circuit, self).__init__()
@@ -43,6 +43,7 @@ class Component(object):
 		self.circuit = circuit
 
 	def insert_connection(self, target, source_pin_number):
+		"""adds a connection from this component's """
 		# I am guessing you know how you want to use this function. 
 		if source_pin_number in self.pins.keys:
 			self.pins[source_pin_number].append(target)
@@ -81,20 +82,27 @@ class Capacitor(Component):
 	"""docstring for Capacitor"""
 	def __init__(self, component_name):
 		super(Capacitor, self).__init__(component_name, 2,2,1)		
-###############################################################################
-# Under construction!
-# Adding new default types to make life easier
-###############################################################################
+
 class Battery_positive(Component):
 	"""docstring for Battery_positive"""
-	def __init__(self, arg):
-		super(Battery_positive, self).__init__()
-		self.arg = arg
+	def __init__(self, component_name):
+		super(Battery_positive, self).__init__(component_name, 1, 1, 1)
 	
+class Battery_negative(Component):
+	"""docstring for Battery_negative"""
+	def __init__(self, component_name):
+		super(Battery_negative, self).__init__(component_name, 1, 1, 1)
+		
+
 class LED(Component):
 	"""docstring for LED"""
-	def __init__(self, arg):
-		super(LED, self).__init__()
+	def __init__(self, component_name):
+		super(LED, self).__init__(component_name, 2, 2, 1)
+
+class Button(object):
+	"""docstring for switch"""
+	def __init__(self, component_name):
+		super(switch, self).__init__(component_name, 2, 2, 1)
 		self.arg = arg
 		
 		
