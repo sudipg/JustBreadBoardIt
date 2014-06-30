@@ -18,10 +18,13 @@ led = circuit.LED("led")
 positive_battery.insert_connection(negative_battery, 1)
 
 
-"""
+
 my_circuit.insert_connection(positive_battery, 1, led, 1)
 my_circuit.insert_connection(led, 1, negative_battery, 1)
-"""
+
+#This should never happen! Sudip, we need to look at this. 
+my_circuit.insert_connection(positive_battery, 13, negative_battery, 15)
+
 
 
 
