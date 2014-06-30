@@ -4,6 +4,7 @@ This file contains most of the structures used to construct a circuit schematic
 
 # Sid: I did some quick changes and wrote a few comments. Sorry if it is a little hurried, but I had to go :/
 # And the dogs are going to kill me in my sleep.
+# HAI GUISE -Sherdil
 
 class Circuit(object):
 	"""A Circuit repr4esentation"""
@@ -13,6 +14,8 @@ class Circuit(object):
 		self.components = []
 		self.connetions = []
 
+	#Hey, this is not well encapsulated. What if the stupid user makes a connection from A to B and then
+	#from B to A (or from A to B twice)? -Sherdil 
 	def insert_connection(self, component1, component1_pin_number, component2, component2_pin_number):
 		"""Only method to be used to insert a connection into the Circuit"""	
 		new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
