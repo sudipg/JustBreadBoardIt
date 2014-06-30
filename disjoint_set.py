@@ -53,8 +53,4 @@ class DisjointSet:
     l[0] is the element and l[1] is the parent. 
     If the parent is negative, it is a root. 
     """
-
-    lst = []
-    for i in range(len(self.array)):
-      lst.append([i, self.array[i]])
-    return lst
+    

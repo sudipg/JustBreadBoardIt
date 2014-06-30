@@ -18,6 +18,7 @@ class Circuit(object):
 		new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
 		self.connections.append(new_connection)
 		component1.insert_connection(new_connection, component1_pin_number)
+		component2.insert_connection(new_connection, component2_pin_number)
 		#I modified the above line a bit because it did not call the func with the right amount of args.
 
 		return new_connection
@@ -33,14 +34,18 @@ class Circuit(object):
 
 class Component(object):
 	"""docstring for Component"""
-	def __init__(self, component_name, number_of_pins, x_length, y_length, circuit):
+	ID = 1
+
+	def __init__(self, component_name, number_of_pins, x_length, y_length):
 		#We need a way of differentiating between two similar components. (What if we have 2 resistors.) An ID number will be fine.
 		super(Component, self).__init__()
 		# self.ID = rand_num or we could have a class field called id_gen that increments everytime a new object is created.
 		self.x_length, self.y_length = x_length, y_length
 		self.number_of_pins = number_of_pins
 		self.pins = {}
-		self.circuit = circuit
+		self.id = ID
+		ID += 1
+		self.reach = max(x_length,y_length)
 
 	def insert_connection(self, target, source_pin_number):
 		"""adds a connection from this component's """
@@ -77,11 +82,13 @@ class Resistor(Component):
 	"""docstring for Resistor"""
 	def __init__(self, component_name):
 		super(Resistor, self).__init__(component_name, 2, 2, 1)
+		self.reach = 6 # reach defines the max distance that can be maintained between its two pins
 
 class Capacitor(Component):
 	"""docstring for Capacitor"""
 	def __init__(self, component_name):
 		super(Capacitor, self).__init__(component_name, 2,2,1)		
+		self.reach = 3
 
 class Battery_positive(Component):
 	"""docstring for Battery_positive"""
@@ -98,11 +105,13 @@ class LED(Component):
 	"""docstring for LED"""
 	def __init__(self, component_name):
 		super(LED, self).__init__(component_name, 2, 2, 1)
+		self.reach = 4
 
 class Button(object):
-	"""docstring for switch"""
+	"""docstring for Button"""
 	def __init__(self, component_name):
-		super(switch, self).__init__(component_name, 2, 2, 1)
-		self.arg = arg
+		super(Button, self).__init__(component_name, 2, 2, 1)
+		self.reach = 1
+
 		
 		

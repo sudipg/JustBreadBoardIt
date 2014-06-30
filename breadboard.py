@@ -1,6 +1,7 @@
 """
 Representation of a breadboard
 """
+import disjoint_set as ds
 
 class Breadboard(object):
 	"""docstring for Breadboard"""
@@ -8,29 +9,30 @@ class Breadboard(object):
 		super(Breadboard, self).__init__()
 		self.number_of_rows = 50
 		self.holes = {}
-		self.right_red = {}
-		self.right_blue = {}
-		self.left_red = {}
-		self.left_blue = {}
 		self.components = {}
 
 		# the standard center pins
-		for x in range(1,11):
+		"""Holes saved in dictionary with keys saved as x_y as a string"""
+		for x in range(1,15):
 			for y in range(1, self.number_of_rows+1):
 				self.holes[str(x).append('_'.append(str(y)))] = Hole(x, y)
 
+		# setup disjoint sets
+		sets = ds.DisjointSets(14*number_of_rows)
 
-		# the power lines
-		for y in range(1, number_of_rows+1):
-			right_blue[y] = Hole(0, y)
-			right_red[y] = Hole(0, y)
-			left_blue[y] = Hole(0, y)
-			left_red[y] = Hole(0, y)
 
 	def insert_pin(x, y, component, pin_number):
 		self.holes[str(x).append('_'.append(str(y)))].insert_pin(pin_number, component)
 		if not component in self.components.values():
 			self.components[len(self.components)+1] = component
+
+	def is_connected(x1, y1, x2, y2):
+		"""For checking if two given points in the center of the breadboard are connected electrically"""
+		pass
+
+	def find_connected_in_range(hole, x1, y1, range):
+		"""returns a list of tuples of coordinates of rearby conneced holes connected to the given hole, within range of x1, y1"""
+		pass
 
 class Hole(object):
 	"""docstring for Hole"""
