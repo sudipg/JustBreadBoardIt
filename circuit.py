@@ -12,7 +12,7 @@ class Circuit(object):
 	def __init__(self):
 		super(Circuit, self).__init__()
 		self.components = []
-		self.connetions = []
+		self.connections = []
 
 	#Hey, this is not well encapsulated. What if the stupid user makes a connection from A to B and then
 	#from B to A (or from A to B twice)? -Sherdil 
@@ -46,14 +46,15 @@ class Component(object):
 		self.x_length, self.y_length = x_length, y_length
 		self.number_of_pins = number_of_pins
 		self.pins = {}
-		self.id = ID
-		ID += 1
+		self.id = Component.ID
+		Component.ID += 1
 		self.reach = max(x_length,y_length)
+		self.component_name = component_name
 
 	def insert_connection(self, target, source_pin_number):
 		"""adds a connection from this component's """
 		# I am guessing you know how you want to use this function. 
-		if source_pin_number in self.pins.keys:
+		if source_pin_number in self.pins.keys(): 
 			self.pins[source_pin_number].append(target)
 		else:
 			self.pins[source_pin_number] = [target]
