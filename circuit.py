@@ -18,23 +18,40 @@ class Circuit(object):
 	#from B to A (or from A to B twice)? -Sherdil 
 	def insert_connection(self, component1, component1_pin_number, component2, component2_pin_number):
 		"""Only method to be used to insert a connection into the Circuit"""	
-		new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
-		self.connections.append(new_connection)
-		component1.insert_connection(new_connection, component1_pin_number)
-		component2.insert_connection(new_connection, component2_pin_number)
+		
+		#Blocking connecting non existant pins/components, as well as creating two of one connection.
+		#Sherdil July 1, 2014
+		if (component1 not in self.components) or (component2 not in self.components):
+			print ("At least one of these components is not in the circuit!")
+		elif (component1_pin_number < 1 or component1_pin_number > component1.number_of_pins or component2_pin_number < 1 or component2_pin_number > component2.number_of_pins):
+			print ("You are attempting to connect pins that do not exist!")
+		#This line still does not work. I will fix this with a .equals method for connections.
+		elif (component1_pin_number in component1.pins.keys() and component2_pin_number in component1.pins[component1_pin_number]) or (component2_pin_number in component2.pins.keys() and component1_pin_number in component2.pins[component2_pin_number]):
+			print ("This connection already exists!")
+		
+		else:
+			new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
+			self.connections.append(new_connection)
+			component1.insert_connection(new_connection, component1_pin_number)
+			component2.insert_connection(new_connection, component2_pin_number)
+			print ("New connection made!")
+			return new_connection
 		#I modified the above line a bit because it did not call the func with the right amount of args.
 
-		return new_connection
+		
 
 	def insert_component(self, component):
 		"""Only method to be used to insert a component into the Circuit. Also returns the new component object"""
 		self.components.append(component)
+		return component
 
 	def remove_connection(self, component1, component2):
 		"""Removes the given connection and its references from the relevant components"""
 		pass
 
-
+#I feel like we should move component before Circuit. Components are the building blocks of circuits.
+#IMHO, code should flow from least complicated to most compicated.
+#Sherdil, July 1,2014
 class Component(object):
 	"""docstring for Component"""
 	ID = 1
@@ -54,12 +71,12 @@ class Component(object):
 	def insert_connection(self, target, source_pin_number):
 		"""adds a connection from this component's """
 		# I am guessing you know how you want to use this function. 
+
 		if source_pin_number in self.pins.keys(): 
 			self.pins[source_pin_number].append(target)
 		else:
 			self.pins[source_pin_number] = [target]
 			# Nothing modified in the above line, but what is [target]?
-
 
 
 class Connection(object):
