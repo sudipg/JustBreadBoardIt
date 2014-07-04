@@ -50,9 +50,39 @@ class Circuit(object):
 		self.components.append(component)
 		return component
 
-	def remove_connection(self, component1, component2):
+	def remove_connection(self, component1, component1_pin_number, component2, component2_pin_number):
 		"""Removes the given connection and its references from the relevant components"""
-		pass
+		test_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
+		
+		for x in self.connections:
+			if x == test_connection:
+				self.connections.remove(x)
+			else:
+				print ("You are attempting to remove a connection that does not exist!")
+				return
+
+		if len(component1.pins[component1_pin_number]) == 1:
+			del component1.pins[component1_pin_number]
+		else:
+			for x in component1.pins[component1_pin_number]:
+				if x == test_connection:
+					component1.pins[component1_pin_number].remove(x)
+
+
+		if len(component2.pins[component2_pin_number]) == 1:
+			del component2.pins[component2_pin_number]
+		else:
+			for x in component2.pins[component2_pin_number]:
+				if x == test_connection:
+					component2.pins[component2_pin_number].remove(x)
+
+		print ("Connection was removed!")
+
+
+
+
+
+
 
 #I feel like we should move component before Circuit. Components are the building blocks of circuits.
 #IMHO, code should flow from least complicated to most compicated.
