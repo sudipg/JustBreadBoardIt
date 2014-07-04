@@ -19,15 +19,20 @@ class Circuit(object):
 	def insert_connection(self, component1, component1_pin_number, component2, component2_pin_number):
 		"""Only method to be used to insert a connection into the Circuit"""	
 		
-		#Blocking connecting non existant pins/components, as well as creating two of one connection.
-		#Sherdil July 1, 2014
+		#July 3, 2014, 11:42am (Yes, I'm coding at this hour. Bite me.)
+		#New duplicate checker. Uses a new __eq__ in connections.
+		for x in self.connections:
+			if x == (Connection(component1, component1_pin_number, component2, component2_pin_number)):
+				print ("This connection already exists!")
+				return
+
+		#Blocking connecting non existant pins/components.
+		#Sherdil July 1, 2014, updated July 3
 		if (component1 not in self.components) or (component2 not in self.components):
 			print ("At least one of these components is not in the circuit!")
 		elif (component1_pin_number < 1 or component1_pin_number > component1.number_of_pins or component2_pin_number < 1 or component2_pin_number > component2.number_of_pins):
 			print ("You are attempting to connect pins that do not exist!")
-		#This line still does not work. I will fix this with a .equals method for connections.
-		elif (component1_pin_number in component1.pins.keys() and component2_pin_number in component1.pins[component1_pin_number]) or (component2_pin_number in component2.pins.keys() and component1_pin_number in component2.pins[component2_pin_number]):
-			print ("This connection already exists!")
+		
 		
 		else:
 			new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
@@ -97,6 +102,13 @@ class Connection(object):
 	def end2(self):
 		"""returns the second connected component as a Component object"""
 		return self.component2
+
+	#For the duplicate connection checker!
+	def __eq__(self, other):
+		if (self.component1 == other.component1 and self.component2 == other.component2) or (self.component1 == other.component2 and self.component2 == other.component1):
+			if (self.component1_pin_number == other.component1_pin_number and self.component2_pin_number == other.component2_pin_number) or (self.component1_pin_number == other.component2_pin_number and self.component2_pin_number == other.component1_pin_number):
+				return True
+		return False
 
 
 class Resistor(Component):
