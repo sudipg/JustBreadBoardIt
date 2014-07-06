@@ -79,6 +79,11 @@ class Circuit(object):
 		print ("You are attempting to remove a connection that does not exist!")
 		return
 
+	def print_connections(self):
+
+		for x in self.connections:
+			print ("There is a connection from " + str(x.component1.component_name) + " on pin " + str(x.component1_pin_number) + " to " + str(x.component2.component_name) + " on pin " + str(x.component2_pin_number) + " (and vice versa).")
+
 		
 
 

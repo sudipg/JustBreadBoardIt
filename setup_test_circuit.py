@@ -28,17 +28,21 @@ my_circuit.insert_connection(led, 1, negative_battery, 1)
 my_circuit.insert_connection(positive_battery, 13, negative_battery, 15)
 
 #Right now this is not working. There should be an error that can't repeat a connection. It isn't triggering! 
-my_circuit.remove_connection(positive_battery, 1, led, 1)
+
+#my_circuit.remove_connection(positive_battery, 1, led, 1)
+
 my_circuit.insert_connection(led, 1, positive_battery, 1)
 
 #Hmm..this errors. For some reason.
 #Sherdil, July 3
-print (my_circuit.connections[1] == circuit.Connection(positive_battery, 1, led, 1))
+#print (my_circuit.connections[1] == circuit.Connection(positive_battery, 1, led, 1))
+
+my_circuit.print_connections()
 
 my_circuit.remove_connection(positive_battery, 1, led, 1)
+my_circuit.remove_connection(positive_battery, 1, led, 1)
 
-
-
+my_circuit.print_connections()
 
 
 
