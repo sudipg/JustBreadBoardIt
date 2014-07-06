@@ -95,6 +95,7 @@ class Circuit(object):
 #I feel like we should move component before Circuit. Components are the building blocks of circuits.
 #IMHO, code should flow from least complicated to most compicated.
 #Sherdil, July 1,2014
+# go right ahead... I probably wrote this at 2AM
 class Component(object):
 	"""docstring for Component"""
 	ID = 1
@@ -120,6 +121,7 @@ class Component(object):
 		else:
 			self.pins[source_pin_number] = [target]
 			# Nothing modified in the above line, but what is [target]?
+			# making a list of connected this if it the the first one, appening otherwise
 
 
 class Connection(object):
