@@ -33,9 +33,11 @@ my_circuit.insert_connection(led, 1, positive_battery, 1)
 
 #Hmm..this errors. For some reason.
 #Sherdil, July 3
+print (my_circuit.connections[1] == circuit.Connection(positive_battery, 1, led, 1))
+
 my_circuit.remove_connection(positive_battery, 1, led, 1)
 
-print(len(my_circuit.connections))
+
 
 
 
@@ -57,4 +59,5 @@ my_circuit.insert_connection(bat, 1, res, 1)
 my_circuit.insert_connection(res, 2, led, 1)
 
 my_circuit.insert_connection(led, 2, bat, 2)
+
 """

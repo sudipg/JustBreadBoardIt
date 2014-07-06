@@ -57,26 +57,29 @@ class Circuit(object):
 		for x in self.connections:
 			if x == test_connection:
 				self.connections.remove(x)
-			else:
-				print ("You are attempting to remove a connection that does not exist!")
+
+				if len(component1.pins[component1_pin_number]) == 1:
+					del component1.pins[component1_pin_number]
+				else:
+					for x in component1.pins[component1_pin_number]:
+						if x == test_connection:
+							component1.pins[component1_pin_number].remove(x)
+
+
+				if len(component2.pins[component2_pin_number]) == 1:
+					del component2.pins[component2_pin_number]
+				else:
+					for x in component2.pins[component2_pin_number]:
+						if x == test_connection:
+							component2.pins[component2_pin_number].remove(x)
+
+				print ("Connection was removed!")
 				return
+			
+		print ("You are attempting to remove a connection that does not exist!")
+		return
 
-		if len(component1.pins[component1_pin_number]) == 1:
-			del component1.pins[component1_pin_number]
-		else:
-			for x in component1.pins[component1_pin_number]:
-				if x == test_connection:
-					component1.pins[component1_pin_number].remove(x)
-
-
-		if len(component2.pins[component2_pin_number]) == 1:
-			del component2.pins[component2_pin_number]
-		else:
-			for x in component2.pins[component2_pin_number]:
-				if x == test_connection:
-					component2.pins[component2_pin_number].remove(x)
-
-		print ("Connection was removed!")
+		
 
 
 
@@ -176,5 +179,35 @@ class Button(object):
 		super(Button, self).__init__(component_name, 2, 2, 1)
 		self.reach = 1
 
-		
-		
+"""		
+my_circuit = Circuit()
+
+#This is a list of components that we can use to test out our code.
+positive_battery = Battery_positive("positive_battery")
+negative_battery = Battery_negative("negative_battery")
+led = LED("led")
+
+
+my_circuit.insert_component(positive_battery)
+my_circuit.insert_component(led)
+my_circuit.insert_component(negative_battery)
+
+
+
+my_circuit.insert_connection(positive_battery, 1, led, 1)
+my_circuit.insert_connection(led, 1, negative_battery, 1)
+
+#This should never happen! Sudip, we need to look at this. 
+my_circuit.insert_connection(positive_battery, 13, negative_battery, 15)
+
+#Right now this is not working. There should be an error that can't repeat a connection. It isn't triggering! 
+my_circuit.remove_connection(positive_battery, 1, led, 1)
+my_circuit.insert_connection(led, 1, positive_battery, 1)
+
+#Hmm..this errors. For some reason.
+#Sherdil, July 3
+my_circuit.remove_connection(positive_battery, 1, led, 1)
+
+print(len(my_circuit.connections))
+"""
+	
