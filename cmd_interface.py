@@ -16,10 +16,18 @@ def REPL():
 		print ('')
 		print ('You can type: "add" in order to add a component, "connect" in order to connect components you have added already, "print_components" to see the components that are in the circuit, or "print_connections" to see where your connections are!')
 		print ('')
+		print ('You can also type "clear" to clear the gunk off the terminal screen or "quit" to exit this program.')
+		print ('')
 		print ('Also, please note that before you connect components, they must have been added to the circuit with the "add" command.')
 	elif user_input == "print_connections":
 		print('')
 		da_circuit.print_connections()
+	elif user_input == "print_components":
+		print ('')
+		print ("List of components:")
+		for part in name_dict:
+			print (part + " is a " + name_dict[part][0])
+
 	elif user_input == "add":
 		add()
 	elif user_input == "connect":
@@ -72,7 +80,7 @@ def add():
 				add_name = input('--> ')
 			component_reference = component_dict[to_add](add_name)
 			da_circuit.insert_component(component_reference)
-			name_dict[add_name] = component_reference
+			name_dict[add_name] = [to_add, component_reference]
 			print('')
 			print("Successfully added the " + to_add + " named " + add_name + " to the circuit! Returning to main menu.")
 			REPL()
@@ -105,7 +113,7 @@ def connect():
 	component_2_pin_number = input('--> ')
 
 	print('')
-	da_circuit.insert_connection(name_dict[component_1_name], int(component_1_pin_number), name_dict[component_2_name], int(component_2_pin_number))
+	da_circuit.insert_connection(name_dict[component_1_name][1], int(component_1_pin_number), name_dict[component_2_name][1], int(component_2_pin_number))
 	REPL()
 
 
