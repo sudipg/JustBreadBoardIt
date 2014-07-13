@@ -7,6 +7,9 @@ defined in circuit.py
 --June 8
 """
 
+#UPDATE 12 JULY:
+#ALL ERRORS FIXED
+
 my_circuit = circuit.Circuit()
 
 #This is a list of components that we can use to test out our code.
