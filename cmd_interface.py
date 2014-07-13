@@ -14,7 +14,7 @@ def REPL():
 
 	if user_input == "help":
 		print ('')
-		print ('You can type: "add" in order to add a component, "connect" in order to connect components you have added already, "print_components" to see the components that are in the circuit, or "print_connections" to see where your connections are!')
+		print ('You can type: "add" in order to add a component, "connect" in order to connect components you have added already, "remove_connection" to remove a connection you created, "print_components" to see the components that are in the circuit, or "print_connections" to see where your connections are!')
 		print ('')
 		print ('You can also type "clear" to clear the gunk off the terminal screen or "quit" to exit this program.')
 		print ('')
@@ -27,7 +27,8 @@ def REPL():
 		print ("List of components:")
 		for part in name_dict:
 			print (part + " is a " + name_dict[part][0])
-
+	elif user_input == "remove_connection":
+		remove()
 	elif user_input == "add":
 		add()
 	elif user_input == "connect":
@@ -89,11 +90,11 @@ def connect():
 	print ('')
 	print ('What is the first component that you would like to form a connection with? You can also type back to return to the main menu.')
 	component_1_name = input("--> ")
-	while component_1_name not in name_dict and component_1_name != "cancel":
+	while component_1_name not in name_dict and component_1_name != "back":
 		print ('')
 		print ('There is no component with this name in the circuit. Try again.')
 		component_1_name = input("--> ")
-	if component_1_name == "cancel":
+	if component_1_name == "back":
 		REPL()
 	print ('')
 	print ('Which pin number on ' + component_1_name + ' will be used in the connection?')
@@ -102,11 +103,11 @@ def connect():
 	print ('')
 	print ('What is the second component that you would like to form a connection with? You can also type back to return to the main menu.')
 	component_2_name = input("--> ")
-	while component_2_name not in name_dict and component_2_name != "cancel":
+	while component_2_name not in name_dict and component_2_name != "back":
 		print ('')
 		print ('There is no component with this name in the circuit. Try again.')
 		component_2_name = input("--> ")
-	if component_2_name == "cancel":
+	if component_2_name == "back":
 		REPL()
 	print ('')
 	print ('Which pin number on ' + component_2_name + ' will be used in the connection?')
@@ -114,6 +115,37 @@ def connect():
 
 	print('')
 	da_circuit.insert_connection(name_dict[component_1_name][1], int(component_1_pin_number), name_dict[component_2_name][1], int(component_2_pin_number))
+	REPL()
+
+def remove():
+	print ('')
+	print ('What is the first component in the connection you would like to remove? You can also type back to return to the main menu.')
+	component_1_name = input("--> ")
+	while component_1_name not in name_dict and component_1_name != "back":
+		print ('')
+		print ('There is no component with this name in the circuit. Try again.')
+		component_1_name = input("--> ")
+	if component_1_name == "back":
+		REPL()
+	print ('')
+	print ('Which pin number on ' + component_1_name + ' is part of the connection to be removed?')
+	component_1_pin_number = input('--> ')
+
+	print ('')
+	print ('What is the second component in the connection you would like to remove? You can also type back to return to the main menu.')
+	component_2_name = input("--> ")
+	while component_2_name not in name_dict and component_2_name != "back":
+		print ('')
+		print ('There is no component with this name in the circuit. Try again.')
+		component_2_name = input("--> ")
+	if component_2_name == "back":
+		REPL()
+	print ('')
+	print ('Which pin number on ' + component_2_name + ' is part of the connection to be removed?')
+	component_2_pin_number = input('--> ')
+
+	print('')
+	da_circuit.remove_connection(name_dict[component_1_name][1], int(component_1_pin_number), name_dict[component_2_name][1], int(component_2_pin_number))
 	REPL()
 
 

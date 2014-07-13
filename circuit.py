@@ -84,12 +84,6 @@ class Circuit(object):
 		for x in self.connections:
 			print ("There is a connection from " + str(x.component1.component_name) + " on pin " + str(x.component1_pin_number) + " to " + str(x.component2.component_name) + " on pin " + str(x.component2_pin_number) + " (and vice versa).")
 
-		
-
-
-
-
-
 
 
 #I feel like we should move component before Circuit. Components are the building blocks of circuits.
