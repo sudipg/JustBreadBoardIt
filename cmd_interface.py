@@ -11,8 +11,10 @@ def REPL():
 
 	if user_input == "help":
 		print ('')
-		print ('You can type "add" in order to add a component, "connect" in order to connect components you have added already, or "print" to see where your connections are!')
-	elif user_input == "print":
+		print ('You can type: "add" in order to add a component, "connect" in order to connect components you have added already, "print_components" to see the components that are in the circuit, or "print_connections" to see where your connections are!')
+		print ('')
+		print ('Also, please note that before you connect components, they must have been added to the circuit with the "add" command.')
+	elif user_input == "print_connections":
 		print('')
 		da_circuit.print_connections()
 	elif user_input == "add":
