@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
+
 import circuit
+import os
 
 da_circuit = circuit.Circuit()
 name_dict = {}
@@ -17,10 +20,12 @@ def REPL():
 		da_circuit.print_connections()
 	elif user_input == "add":
 		add()
-		
 	elif user_input == "connect":
 		connect()
-		
+	elif user_input == "clear":
+		os.system('cls' if os.name=='nt' else 'clear')
+	elif user_input == "quit":
+		exit(0)
 	else:
 		print('')
 		print ("I'm sorry, that command is invalid!")
