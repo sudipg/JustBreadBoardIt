@@ -87,39 +87,20 @@ def add():
 			REPL()
 
 def connect():
-	print ('')
-	print ('What is the first component that you would like to form a connection with? You can also type back to return to the main menu.')
-	component_1_name = input("--> ")
-	while component_1_name not in name_dict and component_1_name != "back":
-		print ('')
-		print ('There is no component with this name in the circuit. Try again.')
-		component_1_name = input("--> ")
-	if component_1_name == "back":
-		REPL()
-	print ('')
-	print ('Which pin number on ' + component_1_name + ' will be used in the connection?')
-	component_1_pin_number = input('--> ')
-
-	print ('')
-	print ('What is the second component that you would like to form a connection with? You can also type back to return to the main menu.')
-	component_2_name = input("--> ")
-	while component_2_name not in name_dict and component_2_name != "back":
-		print ('')
-		print ('There is no component with this name in the circuit. Try again.')
-		component_2_name = input("--> ")
-	if component_2_name == "back":
-		REPL()
-	print ('')
-	print ('Which pin number on ' + component_2_name + ' will be used in the connection?')
-	component_2_pin_number = input('--> ')
-
+	dabits = connect_helper('What is the first component that you would like to form a connection with?', 'What is the second component that you would like to form a connection with?', 'will be used in the connection?')
 	print('')
-	da_circuit.insert_connection(name_dict[component_1_name][1], int(component_1_pin_number), name_dict[component_2_name][1], int(component_2_pin_number))
+	da_circuit.insert_connection(name_dict[dabits[0]][1], dabits[1], name_dict[dabits[2]][1], dabits[3])
 	REPL()
 
 def remove():
+	dabits = connect_helper('What is the first component in the connection you would like to remove?', 'What is the second component in the connection you would like to remove?', 'is part of the connection to be removed?')
+	print('')
+	da_circuit.remove_connection(name_dict[dabits[0]][1], dabits[1], name_dict[dabits[2]][1], dabits[3])
+	REPL()
+
+def connect_helper(prompt1, prompt2, prompt3):
 	print ('')
-	print ('What is the first component in the connection you would like to remove? You can also type back to return to the main menu.')
+	print (prompt1 + ' You can also type back to return to the main menu.')
 	component_1_name = input("--> ")
 	while component_1_name not in name_dict and component_1_name != "back":
 		print ('')
@@ -128,11 +109,11 @@ def remove():
 	if component_1_name == "back":
 		REPL()
 	print ('')
-	print ('Which pin number on ' + component_1_name + ' is part of the connection to be removed?')
+	print ('Which pin number on ' + component_1_name + ' ' + prompt3)
 	component_1_pin_number = input('--> ')
 
 	print ('')
-	print ('What is the second component in the connection you would like to remove? You can also type back to return to the main menu.')
+	print (prompt2 + ' You can also type back to return to the main menu.')
 	component_2_name = input("--> ")
 	while component_2_name not in name_dict and component_2_name != "back":
 		print ('')
@@ -141,16 +122,10 @@ def remove():
 	if component_2_name == "back":
 		REPL()
 	print ('')
-	print ('Which pin number on ' + component_2_name + ' is part of the connection to be removed?')
+	print ('Which pin number on ' + component_1_name + ' ' + prompt3)
 	component_2_pin_number = input('--> ')
 
-	print('')
-	da_circuit.remove_connection(name_dict[component_1_name][1], int(component_1_pin_number), name_dict[component_2_name][1], int(component_2_pin_number))
-	REPL()
-
-
-
-
+	return [component_1_name, int(component_1_pin_number), component_2_name, int(component_2_pin_number)]
 
 REPL()
 
