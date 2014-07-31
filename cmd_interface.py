@@ -7,6 +7,9 @@ da_circuit = circuit.Circuit()
 name_dict = {}
 print ('Welcome to JustBreadBoardit!')
 
+"""NOTE: This is the core of the REPL, and the function that is is repeatedly called recursively. Has a few cool abilities like help, but really is
+	an endless loop to call other things (as all REPLs are."""
+
 def REPL():
 	print ('')
 	print ('You are at the main menu! Please type a command, or "help".')
@@ -42,6 +45,8 @@ def REPL():
 		print ("I'm sorry, that command is invalid!")
 	
 	REPL()
+
+"""NOTE: Subroutine called when the users asks REPL to add a part to the circuit. Remember, parts are added and THEN are connected!"""
 
 def add():
 	print("")
@@ -98,6 +103,11 @@ def remove():
 	da_circuit.remove_connection(name_dict[dabits[0]][1], dabits[1], name_dict[dabits[2]][1], dabits[3])
 	REPL()
 
+"""NOTE: the heart of how we insert and remove connections. This helper spits out values that the remove and add functions (in this file) 
+	can vuse to call the removal and addition functions of the circuit object/ADT defined in circuit.py. This takes a few prompts to
+	ask the user as well in order to be adaptable from an interface perspective. Also, note that this helper function calls another helper 
+	function (scroll down)"""
+
 def connect_helper(prompt1, prompt2, prompt3):
 	print ('')
 	print (prompt1 + ' You can also type back to return to the main menu.')
@@ -124,6 +134,11 @@ def connect_helper(prompt1, prompt2, prompt3):
 	component_2_pin_number = pin_number_getter(component_2_name, prompt3)
 
 	return [component_1_name, component_1_pin_number, component_2_name, component_2_pin_number]
+
+"""NOTE: This is a helper function that is able to ask the user for the pin number they are interested in 
+	for a certain component in the circuit. before we were having issues with strings getting through as 
+	"pin numbers" and crashing the program when they were forced as numbers. This solves this and abstracts 
+	the entire pin number retrieval process into a neat function."""
 
 def pin_number_getter(component_name, purpose_string):
 	while True:
