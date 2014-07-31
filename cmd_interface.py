@@ -108,9 +108,8 @@ def connect_helper(prompt1, prompt2, prompt3):
 		component_1_name = input("--> ")
 	if component_1_name == "back":
 		REPL()
-	print ('')
-	print ('Which pin number on ' + component_1_name + ' ' + prompt3)
-	component_1_pin_number = input('--> ')
+	
+	component_1_pin_number = pin_number_getter(component_1_name, prompt3)
 
 	print ('')
 	print (prompt2 + ' You can also type back to return to the main menu.')
@@ -121,11 +120,26 @@ def connect_helper(prompt1, prompt2, prompt3):
 		component_2_name = input("--> ")
 	if component_2_name == "back":
 		REPL()
-	print ('')
-	print ('Which pin number on ' + component_1_name + ' ' + prompt3)
-	component_2_pin_number = input('--> ')
 
-	return [component_1_name, int(component_1_pin_number), component_2_name, int(component_2_pin_number)]
+	component_2_pin_number = pin_number_getter(component_2_name, prompt3)
+
+	return [component_1_name, component_1_pin_number, component_2_name, component_2_pin_number]
+
+def pin_number_getter(component_name, purpose_string):
+	while True:
+		try:
+			print ('')
+			print ('Which pin number on ' + component_name + ' ' + purpose_string)
+			component_pin_number = int(input('--> '))
+
+		except ValueError:
+			print ('')
+			print ('Hey doofus! The pin number has to be a NUMBER!')
+			continue
+
+		break
+
+	return component_pin_number
 
 REPL()
 
