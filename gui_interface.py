@@ -1,6 +1,7 @@
 import os
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import circuit
 
 os.system('cls' if os.name=='nt' else 'clear')
@@ -38,14 +39,14 @@ def GUI_add(*args):
 
 	def add_button():
 		if component_name.get() == '':
-			warning(add_window, "Whoah there tiger, looks like you forget a name there!")
+			warning("Whoah there tiger, looks like you forget a name there!")
 		elif component_name.get() in name_dict:
-			warning(add_window, "Sorry, looks like there's a part with that name already in the circuit.")
+			warning("Sorry, looks like there's a part with that name already in the circuit.")
 		else:
 			component_reference = component_dict[component_type.get()](component_name.get())
 			da_circuit.insert_component(component_reference)
 			name_dict[component_name.get()] = [component_type.get(), component_reference]
-			warning(add_window, "Successfully added a " + component_type.get() + " named " + component_name.get() + "!")
+			warning("Successfully added a " + component_type.get() + " named " + component_name.get() + "!")
 			
 	ttk.Button(add_frame, text="Add part!", command=add_button).grid(column=1, row=5, sticky=W)
 	ttk.Button(add_frame, text="Back", command= lambda: add_window.destroy()).grid(column=2, row=5, sticky = W)
@@ -84,12 +85,13 @@ def GUI_insert(*args):
 			warning(insert_frame, "Oops..looks like you forgot a component name there!")
 		else:
 			tester = da_circuit.insert_connection(name_dict[component_1_name.get()][1], int(pin_1.get()), name_dict[component_2_name.get()][1], int(pin_2.get()))
-			if tester == 1:
-				warning(insert_frame, "Sorry, that connection already exists!") 
-			elif tester == 3:
-				warning(insert_frame, "Sorry, looks like you're trying to conenct pins that don't exist!") 
+			if isinstance(tester, int):
+				if tester == 1:
+					warning(insert_frame, "Sorry, that connection already exists!") 
+				elif tester == 3:
+					warning(insert_frame, "Sorry, looks like you're trying to conenct pins that don't exist!") 
 			else:
-				warning(insert_frame, "New connectio made!")
+				warning(insert_frame, "New connections made!")
 
 	ttk.Button(insert_frame, text="Make connection!", command = insert_button).grid(column=1, row=5, sticky=W)
 	ttk.Button(insert_frame, text="Back", command=lambda: insert_window.destroy()).grid(column=2, row=5, sticky=W)
@@ -109,12 +111,8 @@ def GUI_quit(*args):
 	root.destroy()
 	exit(0)
 
-def warning(window, message):
-	warning_window = Toplevel(window)
-	warning_frame = ttk.Frame(warning_window, padding="3 3 12 12")
-	warning_frame.grid(column=0, row=0, sticky=(N, W, S, E))
-	ttk.Label(warning_frame, text=message).grid(column=1, row=1, sticky=W)
-	ttk.Button(warning_frame, text='OK', command = lambda: warning_window.destroy()).grid(column=1, row=2, sticky=W)
+def warning(window, inmessage):
+	messagebox.showinfo(message=inmessage, icon='error', title="Uh-oh...")
 
 
 
