@@ -52,7 +52,24 @@ def GUI_add(*args):
 
 
 def GUI_insert(*args):
-	pass
+
+	insert_window = Toplevel(root)
+	insert_frame = ttk.Frame(insert_window, padding="3 3 12 12")
+	insert_frame.grid(column=0, row=0, sticky=(N, W, S, E))
+
+	ttk.Label(insert_frame, text="What is the name of the first component in the circuit involved in the connection?").grid(column=1, row=1, sticky=W)
+
+	component_1_name = ttk.Combobox(insert_frame)
+	component_1_name['values'] = tuple(name_dict.keys())
+	component_1_name.grid(column=1, row=2, sticky=W)
+
+	ttk.Label(insert_frame, text="   On what pin number?").grid(column=2, row=1, sticky=W)
+
+	pin_1 = ttk.Entry(insert_frame)
+	pin_1.grid(column=2, row=2, sticky=W)
+
+
+
 
 def GUI_remove(*args):
 	pass
@@ -74,6 +91,10 @@ def warning(window, message):
 	warning_frame.grid(column=0, row=0, sticky=(N, W, S, E))
 	ttk.Label(warning_frame, text=message).grid(column=1, row=1, sticky=W)
 	ttk.Button(warning_frame, text='OK', command = lambda: warning_window.destroy()).grid(column=1, row=2, sticky=W)
+
+
+
+	
 
 
 

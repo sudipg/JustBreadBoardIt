@@ -16,6 +16,10 @@ class Circuit(object):
 
 	#Hey, this is not well encapsulated. What if the stupid user makes a connection from A to B and then
 	#from B to A (or from A to B twice)? -Sherdil 
+
+	#Hey, new note. I made this function return different numbers in the case of a failure.
+	#This is so that other programs can actually see WHY something failed. 
+	#Sherdil, 7/7/2014
 	def insert_connection(self, component1, component1_pin_number, component2, component2_pin_number):
 		"""Only method to be used to insert a connection into the Circuit"""	
 		
@@ -24,15 +28,16 @@ class Circuit(object):
 		for x in self.connections:
 			if x == (Connection(component1, component1_pin_number, component2, component2_pin_number)):
 				print ("This connection already exists!")
-				return
+				return 1
 
 		#Blocking connecting non existant pins/components.
 		#Sherdil July 1, 2014, updated July 3
 		if (component1 not in self.components) or (component2 not in self.components):
 			print ("At least one of these components is not in the circuit!")
+			return 2
 		elif (component1_pin_number < 1 or component1_pin_number > component1.number_of_pins or component2_pin_number < 1 or component2_pin_number > component2.number_of_pins):
 			print ("You are attempting to connect pins that do not exist!")
-		
+			return 3
 		
 		else:
 			new_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
@@ -41,9 +46,7 @@ class Circuit(object):
 			component2.insert_connection(new_connection, component2_pin_number)
 			print ("New connection made!")
 			return new_connection
-		#I modified the above line a bit because it did not call the func with the right amount of args.
-
-		
+		#I modified the above line a bit because it did not call the func with the right amount of args.		
 
 	def insert_component(self, component):
 		"""Only method to be used to insert a component into the Circuit. Also returns the new component object"""
