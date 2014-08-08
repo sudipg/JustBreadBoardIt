@@ -45,7 +45,7 @@ def GUI_add(*args):
 			component_reference = component_dict[component_type.get()](component_name.get())
 			da_circuit.insert_component(component_reference)
 			name_dict[component_name.get()] = [component_type.get(), component_reference]
-			warning(add_window, "Successfully added a " + component_type.get() + " named " + component_name.get() + " !")
+			warning(add_window, "Successfully added a " + component_type.get() + " named " + component_name.get() + "!")
 			
 	ttk.Button(add_frame, text="Add part!", command=add_button).grid(column=1, row=5, sticky=W)
 	ttk.Button(add_frame, text="Back", command= lambda: add_window.destroy()).grid(column=2, row=5, sticky = W)
@@ -68,7 +68,31 @@ def GUI_insert(*args):
 	pin_1 = ttk.Entry(insert_frame)
 	pin_1.grid(column=2, row=2, sticky=W)
 
+	ttk.Label(insert_frame, text="What is the name of the second component in the circuit involved in the connection?").grid(column=1, row=3, sticky=W)
 
+	component_2_name = ttk.Combobox(insert_frame)
+	component_2_name['values'] = tuple(name_dict.keys())
+	component_2_name.grid(column=1, row=4, sticky=W)
+
+	ttk.Label(insert_frame, text="   On what pin number?").grid(column=2, row=3, sticky=W)
+
+	pin_2 = ttk.Entry(insert_frame)
+	pin_2.grid(column=2, row=4, sticky=W)
+
+	def insert_button():
+		if component_1_name.get() == '' or component_2_name.get() == '':
+			warning(insert_frame, "Oops..looks like you forgot a component name there!")
+		else:
+			tester = da_circuit.insert_connection(name_dict[component_1_name.get()][1], int(pin_1.get()), name_dict[component_2_name.get()][1], int(pin_2.get()))
+			if tester == 1:
+				warning(insert_frame, "Sorry, that connection already exists!") 
+			elif tester == 3:
+				warning(insert_frame, "Sorry, looks like you're trying to conenct pins that don't exist!") 
+			else:
+				warning(insert_frame, "New connectio made!")
+
+	ttk.Button(insert_frame, text="Make connection!", command = insert_button).grid(column=1, row=5, sticky=W)
+	ttk.Button(insert_frame, text="Back", command=lambda: insert_window.destroy()).grid(column=2, row=5, sticky=W)
 
 
 def GUI_remove(*args):
