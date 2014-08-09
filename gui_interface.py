@@ -46,7 +46,7 @@ def GUI_add(*args):
 			component_reference = component_dict[component_type.get()](component_name.get())
 			da_circuit.insert_component(component_reference)
 			name_dict[component_name.get()] = [component_type.get(), component_reference]
-			warning("Successfully added a " + component_type.get() + " named " + component_name.get() + "!")
+			FYI("Successfully added a " + component_type.get() + " named " + component_name.get() + "!")
 			
 	ttk.Button(add_frame, text="Add part!", command=add_button).grid(column=1, row=5, sticky=W)
 	ttk.Button(add_frame, text="Back", command= lambda: add_window.destroy()).grid(column=2, row=5, sticky = W)
@@ -82,16 +82,20 @@ def GUI_insert(*args):
 
 	def insert_button():
 		if component_1_name.get() == '' or component_2_name.get() == '':
-			warning(insert_frame, "Oops..looks like you forgot a component name there!")
+			warning("Oops..looks like you forgot a component name there!")
 		else:
-			tester = da_circuit.insert_connection(name_dict[component_1_name.get()][1], int(pin_1.get()), name_dict[component_2_name.get()][1], int(pin_2.get()))
-			if isinstance(tester, int):
-				if tester == 1:
-					warning(insert_frame, "Sorry, that connection already exists!") 
-				elif tester == 3:
-					warning(insert_frame, "Sorry, looks like you're trying to conenct pins that don't exist!") 
-			else:
-				warning(insert_frame, "New connections made!")
+			try:
+				tester = da_circuit.insert_connection(name_dict[component_1_name.get()][1], int(pin_1.get()), name_dict[component_2_name.get()][1], int(pin_2.get()))
+				print_connections_helper()
+				if isinstance(tester, int):
+					if tester == 1:
+						warning("Sorry, that connection already exists!") 
+					elif tester == 3:
+						warning("Sorry, looks like you're trying to conenct pins that don't exist!") 
+				else:
+					FYI("New connections made! Check the terminal window.")
+			except ValueError:
+				warning("Sorry, check that your pin numbers exist and are actually numbers!")
 
 	ttk.Button(insert_frame, text="Make connection!", command = insert_button).grid(column=1, row=5, sticky=W)
 	ttk.Button(insert_frame, text="Back", command=lambda: insert_window.destroy()).grid(column=2, row=5, sticky=W)
@@ -101,27 +105,39 @@ def GUI_remove(*args):
 	pass
 
 def GUI_connections(*args):
-	pass
+	print_connections_helper()
+	FYI("A list of connections currently in the circuit has been printed to the terminal screen.")
+
 
 def GUI_components(*args):
-	return
-	da_circuit.print_components()
+	print_components_helper()
+	FYI("A list of components currently in the circuit has been printed to the terminal screen.")
 
 def GUI_quit(*args):
 	root.destroy()
 	exit(0)
 
-def warning(window, inmessage):
+def warning(inmessage):
 	messagebox.showinfo(message=inmessage, icon='error', title="Uh-oh...")
 
+def FYI(inmessage):
+	messagebox.showinfo(message=inmessage, icon='info', title="FYI...")
 
+def print_connections_helper():
+	os.system('cls' if os.name=='nt' else 'clear')
+	print ("Current list of all connections in circuit:")
+	print ("")
+	da_circuit.print_connections()
+	print ("")
+	print ("End of list.")
 
-	
-
-
-
-
-
+def print_components_helper():
+	os.system('cls' if os.name=='nt' else 'clear')
+	print("Current list of all components in the circuit...")
+	for part in name_dict:
+			print (part + " is a " + name_dict[part][0])
+	print ("")
+	print ("End of list.")
 
 
 ttk.Label(mainframe, text="Welcome to JustBreadBoardIt! What will you do?").grid(column=1, row=1, sticky=W)
