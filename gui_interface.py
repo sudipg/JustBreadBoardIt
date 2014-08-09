@@ -5,7 +5,7 @@ from tkinter import messagebox
 import circuit
 
 os.system('cls' if os.name=='nt' else 'clear')
-print('YUP!')
+print("Look here every now and then! We like to print lists to this terminal to help you see what's in your circuit.")
 
 da_circuit = circuit.Circuit()
 name_dict = {}
@@ -19,6 +19,8 @@ mainframe.grid(column=0, row=0, sticky=(N, W, S, E))
 
 
 def GUI_add(*args):
+	print_components_helper()
+
 	component_dict = {'resistor' : circuit.Resistor, 'capacitor' : circuit.Capacitor, 'positive_battery' : circuit.Battery_positive, 'negative_battery' : circuit.Battery_negative, 'led' : circuit.LED, 'button' : circuit.Button}
 
 	add_window = Toplevel(root)
@@ -46,13 +48,16 @@ def GUI_add(*args):
 			component_reference = component_dict[component_type.get()](component_name.get())
 			da_circuit.insert_component(component_reference)
 			name_dict[component_name.get()] = [component_type.get(), component_reference]
-			FYI("Successfully added a " + component_type.get() + " named " + component_name.get() + "!")
+			print_components_helper()
+			FYI("Successfully added a " + component_type.get() + " named " + component_name.get() + "! Please check the terminal window for an updated list.")
 			
 	ttk.Button(add_frame, text="Add part!", command=add_button).grid(column=1, row=5, sticky=W)
 	ttk.Button(add_frame, text="Back", command= lambda: add_window.destroy()).grid(column=2, row=5, sticky = W)
 
 
 def GUI_insert(*args):
+
+	print_connections_helper()
 
 	insert_window = Toplevel(root)
 	insert_frame = ttk.Frame(insert_window, padding="3 3 12 12")
@@ -93,7 +98,7 @@ def GUI_insert(*args):
 					elif tester == 3:
 						warning("Sorry, looks like you're trying to conenct pins that don't exist!") 
 				else:
-					FYI("New connections made! Check the terminal window.")
+					FYI("New connections made! Check the terminal window for an updated list.")
 			except ValueError:
 				warning("Sorry, check that your pin numbers exist and are actually numbers!")
 
@@ -134,6 +139,7 @@ def print_connections_helper():
 def print_components_helper():
 	os.system('cls' if os.name=='nt' else 'clear')
 	print("Current list of all components in the circuit...")
+	print ("")
 	for part in name_dict:
 			print (part + " is a " + name_dict[part][0])
 	print ("")
