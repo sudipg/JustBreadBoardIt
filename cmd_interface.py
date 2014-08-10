@@ -104,7 +104,7 @@ def remove():
 	REPL()
 
 """NOTE: the heart of how we insert and remove connections. This helper spits out values that the remove and add functions (in this file) 
-	can vuse to call the removal and addition functions of the circuit object/ADT defined in circuit.py. This takes a few prompts to
+	can use to call the removal and addition functions of the circuit object/ADT defined in circuit.py. This takes a few prompts to
 	ask the user as well in order to be adaptable from an interface perspective. Also, note that this helper function calls another helper 
 	function (scroll down)"""
 

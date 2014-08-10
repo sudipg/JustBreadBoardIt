@@ -57,35 +57,7 @@ def GUI_add(*args):
 
 def GUI_insert(*args):
 
-	print_connections_helper()
-
-	insert_window = Toplevel(root)
-	insert_frame = ttk.Frame(insert_window, padding="3 3 12 12")
-	insert_frame.grid(column=0, row=0, sticky=(N, W, S, E))
-
-	ttk.Label(insert_frame, text="What is the name of the first component in the circuit involved in the connection?").grid(column=1, row=1, sticky=W)
-
-	component_1_name = ttk.Combobox(insert_frame)
-	component_1_name['values'] = tuple(name_dict.keys())
-	component_1_name.grid(column=1, row=2, sticky=W)
-
-	ttk.Label(insert_frame, text="   On what pin number?").grid(column=2, row=1, sticky=W)
-
-	pin_1 = ttk.Entry(insert_frame)
-	pin_1.grid(column=2, row=2, sticky=W)
-
-	ttk.Label(insert_frame, text="What is the name of the second component in the circuit involved in the connection?").grid(column=1, row=3, sticky=W)
-
-	component_2_name = ttk.Combobox(insert_frame)
-	component_2_name['values'] = tuple(name_dict.keys())
-	component_2_name.grid(column=1, row=4, sticky=W)
-
-	ttk.Label(insert_frame, text="   On what pin number?").grid(column=2, row=3, sticky=W)
-
-	pin_2 = ttk.Entry(insert_frame)
-	pin_2.grid(column=2, row=4, sticky=W)
-
-	def insert_button():
+	def insert_button(component_1_name, pin_1, component_2_name, pin_2):
 		if component_1_name.get() == '' or component_2_name.get() == '':
 			warning("Oops..looks like you forgot a component name there!")
 		else:
@@ -102,12 +74,28 @@ def GUI_insert(*args):
 			except ValueError:
 				warning("Sorry, check that your pin numbers exist and are actually numbers!")
 
-	ttk.Button(insert_frame, text="Make connection!", command = insert_button).grid(column=1, row=5, sticky=W)
-	ttk.Button(insert_frame, text="Back", command=lambda: insert_window.destroy()).grid(column=2, row=5, sticky=W)
+	insert_helper("involved in the new connection", "Make connection!", insert_button)
 
 
 def GUI_remove(*args):
-	pass
+	
+	def remove_button(component_1_name, pin_1, component_2_name, pin_2):
+		if component_1_name.get() == '' or component_2_name.get() == '':
+			warning("Oops..looks like you forgot a component name there!")
+		else:
+			try:
+				tester = da_circuit.remove_connection(name_dict[component_1_name.get()][1], int(pin_1.get()), name_dict[component_2_name.get()][1], int(pin_2.get()))
+				print_connections_helper()
+				if tester == 1:
+					FYI("Connection successfully removed. Please check the terminal window for an updated list of connections.")
+				elif tester == 2:
+					warning("Whoops! You're trying to remove a connection that doesn't exist.")
+					
+			except ValueError:
+				warning("Sorry, check that your pin numbers exist and are actually numbers!")
+
+	insert_helper("involved in the removed connection", "Remove connection!", remove_button)
+
 
 def GUI_connections(*args):
 	print_connections_helper()
@@ -144,6 +132,42 @@ def print_components_helper():
 			print (part + " is a " + name_dict[part][0])
 	print ("")
 	print ("End of list.")
+
+def insert_helper(task_string, button_text, command_function):
+	print_connections_helper()
+
+	insert_window = Toplevel(root)
+	insert_frame = ttk.Frame(insert_window, padding="3 3 12 12")
+	insert_frame.grid(column=0, row=0, sticky=(N, W, S, E))
+
+	ttk.Label(insert_frame, text="What is the name of the first component in the circuit " + task_string+ "?").grid(column=1, row=1, sticky=W)
+
+	component_1_name = ttk.Combobox(insert_frame)
+	component_1_name['values'] = tuple(name_dict.keys())
+	component_1_name.grid(column=1, row=2, sticky=W)
+
+	ttk.Label(insert_frame, text="   On what pin number?").grid(column=2, row=1, sticky=W)
+
+	pin_1 = ttk.Entry(insert_frame)
+	pin_1.grid(column=2, row=2, sticky=W)
+
+	ttk.Label(insert_frame, text="What is the name of the second component in the circuit " + task_string+ "?").grid(column=1, row=3, sticky=W)
+
+	component_2_name = ttk.Combobox(insert_frame)
+	component_2_name['values'] = tuple(name_dict.keys())
+	component_2_name.grid(column=1, row=4, sticky=W)
+
+	ttk.Label(insert_frame, text="   On what pin number?").grid(column=2, row=3, sticky=W)
+
+	pin_2 = ttk.Entry(insert_frame)
+	pin_2.grid(column=2, row=4, sticky=W)
+
+	holder_function = lambda: command_function(component_1_name, pin_1, component_2_name, pin_2)
+	ttk.Button(insert_frame, text=button_text, command = holder_function).grid(column=1, row=5, sticky=W)
+	
+	ttk.Button(insert_frame, text="Back", command=lambda: insert_window.destroy()).grid(column=2, row=5, sticky=W)
+
+
 
 
 ttk.Label(mainframe, text="Welcome to JustBreadBoardIt! What will you do?").grid(column=1, row=1, sticky=W)
