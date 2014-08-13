@@ -187,6 +187,11 @@ class Button(Component):
 		super(Button, self).__init__(component_name, 2, 2, 1)
 		self.reach = 1
 
+class Switchboard(Component):
+	def __init__(self, component_name):
+		super(Switchboard, self).__init__(component_name, 20, 5, 4)
+
+
 """		
 my_circuit = Circuit()
 
