@@ -53,6 +53,10 @@ class Circuit(object):
 		self.components.append(component)
 		return component
 
+	
+	#Hey, new note. I made this function return different numbers in the case of a failure.
+	#This is so that other programs can actually see WHY something failed. 
+	#Sherdil, 7/10/2014
 	def remove_connection(self, component1, component1_pin_number, component2, component2_pin_number):
 		"""Removes the given connection and its references from the relevant components"""
 		test_connection = Connection(component1, component1_pin_number, component2, component2_pin_number)
@@ -77,10 +81,10 @@ class Circuit(object):
 							component2.pins[component2_pin_number].remove(x)
 
 				print ("Connection was removed!")
-				return
+				return 1
 			
 		print ("You are attempting to remove a connection that does not exist!")
-		return
+		return 2
 
 	def print_connections(self):
 
