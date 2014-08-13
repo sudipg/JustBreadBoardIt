@@ -7,14 +7,19 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import circuit
+import visual_rep
+
 
 os.system('cls' if os.name=='nt' else 'clear')
 print("Look here every now and then! We like to print lists to this terminal to help you see what's in your circuit.")
 
 da_circuit = circuit.Circuit()
+
 name_dict = {}
 
 root = Tk()
+
+da_rep = visual_rep.Visual_rep(root)
 
 #Creating our root window.
 root.title("JustBreadBoardIt!")
@@ -58,6 +63,9 @@ def GUI_add(*args):
 			component_reference = component_dict[component_type.get()](component_name.get())
 			da_circuit.insert_component(component_reference)
 			name_dict[component_name.get()] = [component_type.get(), component_reference]
+			
+			da_rep.insert(component_name.get(), component_reference.x_length, component_reference.y_length)
+
 			print_components_helper()
 			FYI("Successfully added a " + component_type.get() + " named " + component_name.get() + "! Please check the terminal window for an updated list.")
 			
@@ -83,6 +91,9 @@ def GUI_insert(*args):
 					elif tester == 3:
 						warning("Sorry, looks like you're trying to conenct pins that don't exist!") 
 				else:
+					
+					da_rep.connect(component_1_name.get(), int(pin_1.get()), component_2_name.get(), int(pin_2.get()))
+
 					FYI("New connections made! Check the terminal window for an updated list.")
 			except ValueError:
 				warning("Sorry, check that your pin numbers exist and are actually numbers!")
@@ -100,6 +111,9 @@ def GUI_remove(*args):
 				tester = da_circuit.remove_connection(name_dict[component_1_name.get()][1], int(pin_1.get()), name_dict[component_2_name.get()][1], int(pin_2.get()))
 				print_connections_helper()
 				if tester == 1:
+					
+					da_rep.remove(component_1_name.get(), int(pin_1.get()), component_2_name.get(), int(pin_2.get()))
+
 					FYI("Connection successfully removed. Please check the terminal window for an updated list of connections.")
 				elif tester == 2:
 					warning("Whoops! You're trying to remove a connection that doesn't exist.")

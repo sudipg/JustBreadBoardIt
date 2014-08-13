@@ -2,6 +2,7 @@
 
 import circuit
 import os
+import visual_rep
 
 da_circuit = circuit.Circuit()
 name_dict = {}
@@ -94,7 +95,7 @@ def add():
 def connect():
 	dabits = connect_helper('What is the first component that you would like to form a connection with?', 'What is the second component that you would like to form a connection with?', 'will be used in the connection?')
 	print('')
-	da_circuit.insert_connection(name_dict[dabits[0]][1], dabits[1], name_dict[dabits[2]][1], dabits[3])
+	da_circuit.insert_connection(name_dict[dabits[0]][1], dabits[1], name_dict[dabits[2]][1], dabits[3])	
 	REPL()
 
 def remove():

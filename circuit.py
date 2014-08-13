@@ -181,7 +181,7 @@ class LED(Component):
 		super(LED, self).__init__(component_name, 2, 2, 1)
 		self.reach = 4
 
-class Button(object):
+class Button(Component):
 	"""docstring for Button"""
 	def __init__(self, component_name):
 		super(Button, self).__init__(component_name, 2, 2, 1)
