@@ -35,7 +35,7 @@ those too, these won't make all that much sense."""
 def GUI_add(*args):
 	print_components_helper()
 
-	component_dict = {'resistor' : circuit.Resistor, 'capacitor' : circuit.Capacitor, 'positive_battery' : circuit.Battery_positive, 'negative_battery' : circuit.Battery_negative, 'led' : circuit.LED, 'button' : circuit.Button}
+	component_dict = {'resistor' : circuit.Resistor, 'capacitor' : circuit.Capacitor, 'positive_battery' : circuit.Battery_positive, 'negative_battery' : circuit.Battery_negative, 'led' : circuit.LED, 'button' : circuit.Button, 'switchboard': circuit.Switchboard}
 
 	add_window = Toplevel(root)
 	add_frame = ttk.Frame(add_window, padding="3 3 12 12")
@@ -45,7 +45,7 @@ def GUI_add(*args):
 	
 	component_type = ttk.Combobox(add_frame)
 	component_type.grid(column=1, row=2, sticky=W)
-	component_type['values'] =  ('resistor', 'capacitor', 'positive_battery', 'negative_battery', 'led', 'button')
+	component_type['values'] =  ('resistor', 'capacitor', 'positive_battery', 'negative_battery', 'led', 'button', 'switchboard')
 	component_type.set('resistor')
 
 	ttk.Label(add_frame, text="What will it be called?").grid(column=1, row=3, sticky=W)
@@ -64,7 +64,7 @@ def GUI_add(*args):
 			da_circuit.insert_component(component_reference)
 			name_dict[component_name.get()] = [component_type.get(), component_reference]
 			
-			da_rep.insert(component_name.get(), component_reference.x_length, component_reference.y_length)
+			da_rep.insert(component_name.get(), component_type.get(), component_reference.x_length, component_reference.y_length)
 
 			print_components_helper()
 			FYI("Successfully added a " + component_type.get() + " named " + component_name.get() + "! Please check the terminal window for an updated list.")
