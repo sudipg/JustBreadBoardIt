@@ -50,6 +50,9 @@ class Circuit(object):
 
 	def insert_component(self, component):
 		"""Only method to be used to insert a component into the Circuit. Also returns the new component object"""
+		for c in components:
+			if c.component_name == component.component_name:
+				return 'choose a different name...' #We cannot , for now, support multiple component names. maybe we can allow this once the highlighiting of components on canvas is implemented?
 		self.components.append(component)
 		return component
 
