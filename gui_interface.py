@@ -1,14 +1,14 @@
-"""This is the file that runs the graphical user interface as opposed to the command line interface you get in cmd_interface.py. We used
-Tkinter to build this, with a lot of inspiration from the command line interface. Also note that the terminal is used still in this version,
-the user just doesn't interact with it. It's used to display lists to make the user's life much easier."""
+""" This is the file that runs the graphical user interface as opposed to the command line interface you get in cmd_interface.py. We used
+    Tkinter to build this, with a lot of inspiration from the command line interface. Also note that the terminal is used still in this version,
+    the user just doesn't interact with it. It's used to display lists to make the user's life much easier."""
 
 import os
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+
 import circuit
 import visual_rep
-
 
 os.system('cls' if os.name=='nt' else 'clear')
 print("Look here every now and then! We like to print lists to this terminal to help you see what's in your circuit.")

@@ -85,11 +85,11 @@ class Circuit(object):
 		print ("You are attempting to remove a connection that does not exist!")
 		return 2
 
-	def print_connections(self):
-
+	def get_connections(self):
+		string = ""
 		for x in self.connections:
-			print ("There is a connection from " + str(x.component1.component_name) + " on pin " + str(x.component1_pin_number) + " to " + str(x.component2.component_name) + " on pin " + str(x.component2_pin_number) + " (and vice versa).")
-
+			string += ("There is a connection from " + str(x.component1.component_name) + " on pin " + str(x.component1_pin_number) + " to " + str(x.component2.component_name) + " on pin " + str(x.component2_pin_number) + " (and vice versa).")
+		return string
 
 
 #I feel like we should move component before Circuit. Components are the building blocks of circuits.
