@@ -2,12 +2,14 @@
 Representation of a breadboard
 """
 import disjoint_set as ds
+import netwrokx as nx
 
 class Breadboard(object):
 	"""docstring for Breadboard"""
 	def __init__(self):
 		super(Breadboard, self).__init__()
 		self.number_of_rows = 50
+		self.numer_of_columns = 14
 		self.holes = {}
 		self.components = {}
 
