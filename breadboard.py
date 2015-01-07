@@ -12,15 +12,22 @@ class Breadboard(object):
 		self.numer_of_columns = 14
 		self.holes = {}
 		self.components = {}
+		self.graph = nx.Graph()
 
-		# the standard center pins
 		"""Holes saved in dictionary with keys saved as x_y as a string"""
 		for x in range(1,15):
 			for y in range(1, self.number_of_rows+1):
-				self.holes[str(x).append('_'.append(str(y)))] = Hole(x, y)
+				new_hole = Hole(x, y)
+				self.holes[str(x).append('_'.append(str(y)))] = new_hole
+				self.graph.add_node(new_hole)
 
-		# setup disjoint sets
-		sets = ds.DisjointSets(14*number_of_rows)
+		"""Setup standard breadboard connections"""
+		for x in [1,2,13,14]:
+			for y in range(1,self.number_of_rows):
+				node1 = self.holes[str(x).append('_'.append(str(y)))]
+				node2 = self.holes[str(x).append('_'.append(str(y+1)))]
+				self.graph.add_edge(node1, node2)
+
 
 
 	def insert_pin(x, y, component, pin_number):
