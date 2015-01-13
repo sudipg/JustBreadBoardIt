@@ -7,3 +7,8 @@ Motivation: those new to EE and breadboards might have some trouble figuring out
 Just let the software do the thinking for you! saves time!
 - Target for now : working console interface with a visual output
 - Eventual Target: fully functional GUI output and input
+
+## To do ##
+  * Add remove\_component functionality
+  * Deal with case when a lot of components are added
+  * Improve circuit visual repr

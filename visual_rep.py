@@ -4,9 +4,8 @@ import random
 
 class Visual_rep(object):
 
-	def __init__(self, parent):
-		self.root = Toplevel(parent)
-		self.canvas = Canvas(self.root, width=2000, height=300)
+	def __init__(self, parent, size_x, size_y):
+		self.canvas = Canvas(parent, width=size_x, height=size_y)
 		self.canvas.pack()
 		self.minimum_x = 0
 
