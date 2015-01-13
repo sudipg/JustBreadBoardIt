@@ -10,5 +10,6 @@ Just let the software do the thinking for you! saves time!
 
 ## To do ##
   * Add remove\_component functionality
+  * Make console more xterm-like
   * Deal with case when a lot of components are added
   * Improve circuit visual repr
