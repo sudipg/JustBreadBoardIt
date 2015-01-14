@@ -45,6 +45,7 @@ name_dict = {}
 
 def print_to_console(string):
   text_widget.config(state=NORMAL)
+  text_widget.delete(1.0, END)
   text_widget.insert(INSERT, string + "\n")
   text_widget.config(state=DISABLED)
 
